@@ -17,12 +17,6 @@ export default function PriceChart() {
     },
   });
 
-  if (!isPending) {
-    console.log(data);
-  }
-
-  // eslint-disable-next-line no-console
-
   return (
     <div className="">
       <form>
