@@ -1,15 +1,24 @@
 const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 
-export async function getCoinHistoricalChartData(coinId, currency) {
+export async function getCoinHistoricalChartData(
+  coinId,
+  currency
+): Promise<{
+  prices: number[][];
+  marketCaps: number[][];
+  totalVolumes: number[][];
+}> {
   try {
     // Make the fetch request
     const res = await fetch(`
         ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=1&${apiKey}`);
 
     // Check if the response is not OK (i.e., status code not in the range 200-299)
-    if (!res.ok || res.error) {
-      throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(`Error fetching data: ${res.status} ${error}`);
     }
 
     // Parse the response as JSON
@@ -27,7 +36,7 @@ export async function getCoinHistoricalChartData(coinId, currency) {
   } catch (error) {
     // Handle errors (e.g., network issues, API errors)
     // eslint-disable-next-line no-console
-    console.error("Error in getCoinHistoricalChartData:", error);
+    console.error("Error in getCoinHistoricalChartData. ", error);
     throw error; // Re-throw the error so it can be handled by the calling function
   }
 }
