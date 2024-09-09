@@ -42,8 +42,6 @@ export default function PriceChart() {
     },
   });
 
-<<<<<<< HEAD
-=======
   if (isPending) {
     return <p>Loading...</p>;
   }
@@ -70,7 +68,6 @@ export default function PriceChart() {
   };
 
   // eslint-disable-next-line no-console
->>>>>>> ede4304 (added shadcn to the project and established basic functionality of bitcoin price chart)
   return (
     <div className="">
       <form>
