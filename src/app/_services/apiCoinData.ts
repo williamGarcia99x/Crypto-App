@@ -41,3 +41,28 @@ export async function getCoinHistoricalChartData(
     throw error; // Re-throw the error so it can be handled by the calling function
   }
 }
+export async function getCoinList() {
+  try {
+    // Make the fetch request
+    const res = await fetch(`
+        ${baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=1h`);
+
+    // Check if the response is not OK (i.e., status code not in the range 200-299)
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(`Error fetching data: ${res.status} ${error}`);
+    }
+
+    // Parse the response as JSON
+    const data = await res.json();
+
+    // Return the structured data
+    return data;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in getCoinList() ", error);
+    throw error; // Re-throw the error so it can be handled by the calling function
+  }
+}

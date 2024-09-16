@@ -1,19 +1,28 @@
-"use client"; //For now, this is a client component
-import { useState } from "react";
-import Carousel from "./_components/Carousel";
+import CoinCarousel from "./_components/CoinCarousel";
 import CoinsTable from "./_components/CoinsTable";
 import IntervalSelector from "./_components/IntervalSelector";
 import CoinVisualOverview from "./_components/CoinVisualOverview";
+import { getCoinList } from "../_services/apiCoinData";
 
-export default function Home() {
-  const [coinId, setCoinId] = useState("bitcoin");
-  const [currency, setCurrency] = useState("usd");
-  const [days, setDays] = useState(1);
+export default async function Home() {
+  const data = await getCoinList();
 
   return (
     <main className="">
-      <Carousel />
-      <form className="flex gap-2">
+      <CoinCarousel coinsData={data} />
+      <CoinVisualOverview currency={"usd"} />
+      <IntervalSelector />
+      <CoinsTable />
+    </main>
+  );
+}
+
+/* 
+    const [coinId, setCoinId] = useState("bitcoin");
+  const [currency, setCurrency] = useState("usd");
+  const [days, setDays] = useState(1);
+  
+  <form className="flex gap-2">
         <select value={coinId} onChange={(e) => setCoinId(e.target.value)}>
           <option value="bitcoin">bitcoin</option>
           <option value="ethereum">ethereum</option>
@@ -30,10 +39,4 @@ export default function Home() {
           <option value={14}>14D</option>
           <option value={30}>1M</option>∂<option value={365}>1Y</option>
         </select>
-      </form>
-      <CoinVisualOverview coinId={coinId} currency={currency} days={days} />
-      <IntervalSelector />
-      <CoinsTable />
-    </main>
-  );
-}
+      </form> */

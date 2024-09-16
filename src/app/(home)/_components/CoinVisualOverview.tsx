@@ -6,26 +6,25 @@ import PriceChart from "./PriceChart";
 import VolumeChart from "./VolumeChart";
 import { useState } from "react";
 import { useMediaQuery } from "@/app/_hooks/useMediaQuery";
+import { useSelector } from "react-redux";
+import { getCoin, getDaysAgo } from "../homeSlice";
 
 type CoinVisualOverviewProps = {
-  coinId: string;
   currency: string;
-  days: number;
 };
 
-function CoinVisualOverview({
-  coinId,
-  currency,
-  days,
-}: CoinVisualOverviewProps) {
+function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   const [showPriceChart, setShowPriceChart] = useState(true);
   const isWideViewPort = useMediaQuery("(min-width: 935px)");
+  const selectedCoin = useSelector(getCoin);
+  const daysAgo = useSelector(getDaysAgo);
+
   const { isPending, error, data } = useQuery({
-    queryKey: ["coin_historical_data", coinId, currency, days],
+    queryKey: ["coin_historical_data", selectedCoin, currency, daysAgo],
     queryFn: ({ queryKey }) => {
-      const [_, _coinId, _currency, _days] = queryKey;
+      const [_, _coinId, _currency, _daysAgo] = queryKey;
       if (_coinId === "") return null;
-      return getCoinHistoricalChartData(_coinId, _currency, _days);
+      return getCoinHistoricalChartData(_coinId, _currency, _daysAgo);
     },
     gcTime: 30000,
   });
@@ -46,24 +45,20 @@ function CoinVisualOverview({
       )}
       {/* In mobile view, this space should be shared by the PriceChart and VolumeChart. If it's spacious enough, we can display both of them side by side */}
 
-      {isWideViewPort || showPriceChart ? (
+      {(isWideViewPort || showPriceChart) && (
         <PriceChart
-          xLabels={data?.prices.map((entry) => new Date(entry[0])) as Date[]}
-          dataPoints={data?.prices.map((entry) => entry[1]) as number[]}
-          coinId={coinId}
-          days={days}
+          coinId={selectedCoin}
+          days={daysAgo}
+          priceData={data?.prices as number[][]}
         />
-      ) : null}
-      {isWideViewPort || !showPriceChart ? (
+      )}
+      {(isWideViewPort || !showPriceChart) && (
         <VolumeChart
-          xLabels={
-            data?.totalVolumes.map((entry) => new Date(entry[0])) as Date[]
-          }
-          dataPoints={data?.totalVolumes.map((entry) => entry[1]) as number[]}
-          coinId={coinId}
-          days={days}
+          coinId={selectedCoin}
+          days={daysAgo}
+          volumeData={data?.totalVolumes as number[][]}
         />
-      ) : null}
+      )}
     </div>
   );
 }

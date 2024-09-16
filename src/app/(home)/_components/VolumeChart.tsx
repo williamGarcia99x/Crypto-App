@@ -32,8 +32,7 @@ const colors = {
 };
 
 type VolumeChartProps = {
-  xLabels: unknown[];
-  dataPoints: number[];
+  volumeData: number[][];
   coinId: string;
   days: number;
 };
@@ -41,9 +40,20 @@ type VolumeChartProps = {
 export default function VolumeChart({
   coinId,
   days,
-  xLabels,
-  dataPoints,
+  volumeData,
 }: VolumeChartProps) {
+  const { xLabels, dataPoints } = volumeData.reduce(
+    (acc, el) => {
+      acc.xLabels.push(new Date(el[0]));
+      acc.dataPoints.push(el[1]);
+      return acc;
+    },
+    {
+      xLabels: [] as Date[],
+      dataPoints: [] as number[],
+    }
+  );
+
   return (
     <div>
       <div className="w-full ">

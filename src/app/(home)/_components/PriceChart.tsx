@@ -3,7 +3,6 @@
 import "chartjs-adapter-date-fns";
 
 import LineChart from "@/app/_components/LineChart";
-import tailwindConfig from "@tailwind";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -28,18 +27,28 @@ ChartJS.register(
 );
 
 type PriceChartProps = {
-  xLabels: unknown[];
-  dataPoints: number[];
   coinId: string;
   days: number;
+  priceData: number[][];
 };
 
 export default function PriceChart({
   coinId,
   days,
-  xLabels,
-  dataPoints,
+  priceData,
 }: PriceChartProps) {
+  const { xLabels, dataPoints } = priceData.reduce(
+    (acc, el) => {
+      acc.xLabels.push(new Date(el[0]));
+      acc.dataPoints.push(el[1]);
+      return acc;
+    },
+    {
+      xLabels: [] as Date[],
+      dataPoints: [] as number[],
+    }
+  );
+
   return (
     <div className="w-full">
       <div className="relative left-2">
