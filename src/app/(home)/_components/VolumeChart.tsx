@@ -3,6 +3,7 @@
 import "chartjs-adapter-date-fns";
 
 import LineChart from "@/app/_components/LineChart";
+import tailwindConfig from "@tailwind";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -26,18 +27,22 @@ ChartJS.register(
   Filler
 );
 
-type PriceChartProps = {
-  coinId: string;
-  days: number;
-  priceData: number[][];
+const colors = {
+  primaryLine: tailwindConfig.theme?.colors?.cryptoblue["700"] as string,
 };
 
-export default function PriceChart({
+type VolumeChartProps = {
+  volumeData: number[][];
+  coinId: string;
+  days: number;
+};
+
+export default function VolumeChart({
   coinId,
   days,
-  priceData,
-}: PriceChartProps) {
-  const { xLabels, dataPoints } = priceData.reduce(
+  volumeData,
+}: VolumeChartProps) {
+  const { xLabels, dataPoints } = volumeData.reduce(
     (acc, el) => {
       acc.xLabels.push(new Date(el[0]));
       acc.dataPoints.push(el[1]);
@@ -50,17 +55,19 @@ export default function PriceChart({
   );
 
   return (
-    <div className="w-full">
-      <div className="relative left-2">
-        <p>{coinId}</p>
-        <p>${Math.round(dataPoints.at(-1) as number)}</p>
+    <div>
+      <div className="w-full ">
+        <div className="relative left-2">
+          <p>{coinId}</p>
+          <p>${Math.round(dataPoints.at(-1) as number)}</p>
+        </div>
+        <LineChart
+          xLabels={xLabels}
+          dataPoints={dataPoints}
+          coinName={coinId}
+          options={{ days }}
+        />
       </div>
-      <LineChart
-        xLabels={xLabels}
-        dataPoints={dataPoints}
-        coinName={coinId}
-        options={{ days }}
-      />
     </div>
   );
 }
