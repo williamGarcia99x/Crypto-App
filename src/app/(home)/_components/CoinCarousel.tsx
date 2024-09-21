@@ -12,14 +12,15 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoin, setCoin } from "../homeSlice";
 import { AppDispatch } from "@/app/store";
+import { CoinDescriptionShort } from "@/lib/types";
 
 type CoinCarouselProps = {
-  coinsData: Array<{ id: string; symbol: string; name: string; image: string }>;
+  coinsData: Array<CoinDescriptionShort>;
 };
 
 function CoinCarousel({ coinsData }: CoinCarouselProps) {
   const isWideViewPort = useMediaQuery("(min-width: 935px)");
-  const testCoinData = coinsData.slice(0, 12);
+  const testCoinData = coinsData.slice(0, 20);
   const selectedCoin = useSelector(getCoin);
   const dispatch: AppDispatch = useDispatch();
   return (
@@ -30,11 +31,11 @@ function CoinCarousel({ coinsData }: CoinCarouselProps) {
             <CarouselItem key={el.id} className="basis-[1/3] pl-1 ">
               <button
                 className={`flex justify-center gap-1 p-2 rounded-md w-[90px] items-center ${
-                  el.id === selectedCoin
+                  el.id === selectedCoin.id
                     ? "bg-cryptoblue-790"
                     : "bg-cryptodark-810"
                 }`}
-                onClick={() => dispatch(setCoin(el.id))}
+                onClick={() => dispatch(setCoin(el))}
               >
                 <div className="relative w-6 h-6 sm:w-8 sm:h-8 bg-cryptoblue-100">
                   <Image

@@ -3,8 +3,8 @@
 import "chartjs-adapter-date-fns";
 
 import LineChart from "@/app/_components/LineChart";
-import tailwindConfig from "@tailwind";
 import {
+  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Filler,
@@ -16,7 +16,10 @@ import {
   Tooltip,
 } from "chart.js";
 
+import { CoinDescriptionShort } from "@/lib/types";
+
 ChartJS.register(
+  BarElement,
   CategoryScale,
   TimeScale,
   LinearScale,
@@ -24,21 +27,17 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Filler
+  Filler,
 );
-
-const colors = {
-  primaryLine: tailwindConfig.theme?.colors?.cryptoblue["700"] as string,
-};
 
 type VolumeChartProps = {
   volumeData: number[][];
-  coinId: string;
+  selectedCoin: CoinDescriptionShort;
   days: number;
 };
 
 export default function VolumeChart({
-  coinId,
+  selectedCoin,
   days,
   volumeData,
 }: VolumeChartProps) {
@@ -51,23 +50,30 @@ export default function VolumeChart({
     {
       xLabels: [] as Date[],
       dataPoints: [] as number[],
-    }
+    },
   );
 
   return (
-    <div>
-      <div className="w-full ">
-        <div className="relative left-2">
-          <p>{coinId}</p>
-          <p>${Math.round(dataPoints.at(-1) as number)}</p>
-        </div>
-        <LineChart
-          xLabels={xLabels}
-          dataPoints={dataPoints}
-          coinName={coinId}
-          options={{ days }}
-        />
+    <div className="dark:bg-dark-400 rounded-2xl p-4 shadow-md">
+      <div className="">
+        <p className="font-normal text-[#191932] dark:text-[#E8E8E8]">
+          <span>{selectedCoin.name} </span>
+          <span className="uppercase">({selectedCoin.symbol})</span>
+        </p>
+        <p className="text-xl font-bold dark:font-normal">
+          ${Math.round(dataPoints.at(-1) as number)}
+        </p>
       </div>
+      <LineChart
+        xLabels={xLabels}
+        dataPoints={dataPoints}
+        options={{ days }}
+        lineColor={[
+          "rgba(216,120,250,1)",
+          "rgba(216,120,250,0.6)",
+          "rgba(216,120,250,0.1)",
+        ]}
+      />
     </div>
   );
 }

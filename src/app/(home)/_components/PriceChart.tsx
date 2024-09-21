@@ -14,6 +14,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { CoinDescriptionShort } from "@/lib/types";
 
 ChartJS.register(
   CategoryScale,
@@ -23,17 +24,17 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Filler
+  Filler,
 );
 
 type PriceChartProps = {
-  coinId: string;
+  selectedCoin: CoinDescriptionShort;
   days: number;
   priceData: number[][];
 };
 
 export default function PriceChart({
-  coinId,
+  selectedCoin,
   days,
   priceData,
 }: PriceChartProps) {
@@ -46,20 +47,29 @@ export default function PriceChart({
     {
       xLabels: [] as Date[],
       dataPoints: [] as number[],
-    }
+    },
   );
 
   return (
-    <div className="w-full">
-      <div className="relative left-2">
-        <p>{coinId}</p>
-        <p>${Math.round(dataPoints.at(-1) as number)}</p>
+    <div className="dark:bg-dark-400 rounded-2xl p-4 shadow-md">
+      <div className="">
+        <p className="font-normal text-[#191932] dark:text-[#E8E8E8]">
+          <span>{selectedCoin.name} </span>
+          <span className="uppercase">({selectedCoin.symbol})</span>
+        </p>
+        <p className="text-xl font-bold dark:font-normal">
+          ${Math.round(dataPoints.at(-1) as number)}
+        </p>
       </div>
       <LineChart
         xLabels={xLabels}
         dataPoints={dataPoints}
-        coinName={coinId}
         options={{ days }}
+        lineColor={[
+          "#7878FA",
+          "rgb(120 , 120, 250, 0.5)",
+          "rgb(120 , 120, 250, 0.0)",
+        ]}
       />
     </div>
   );

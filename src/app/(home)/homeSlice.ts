@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { CoinDescriptionShort } from "@/lib/types";
 
 type HomeStateType = {
-  selectedCoin: string;
-  daysAgo: 1 | 7 | 14 | 30 | 365;
+  selectedCoin: CoinDescriptionShort;
+  daysAgo: 1 | 8 | 14 | 30 | 180 | 365;
 };
 
 const initialState: HomeStateType = {
-  selectedCoin: "bitcoin",
+  selectedCoin: {
+    id: "bitcoin",
+    symbol: "btc",
+    name: "Bitcoin",
+    image:
+      "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+  },
   daysAgo: 1,
 };
 
@@ -15,10 +22,10 @@ const homeSlice = createSlice({
   name: "home",
   initialState,
   reducers: {
-    setCoin(state, action: PayloadAction<string>) {
+    setCoin(state, action: PayloadAction<CoinDescriptionShort>) {
       state.selectedCoin = action.payload;
     },
-    setDaysAgo(state, action: PayloadAction<1 | 7 | 14 | 30 | 365>) {
+    setDaysAgo(state, action: PayloadAction<1 | 8 | 14 | 30 | 180 | 365>) {
       state.daysAgo = action.payload;
     },
   },

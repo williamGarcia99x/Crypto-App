@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// eslint-disable-next-line camelcase
+import { Space_Grotesk } from "next/font/google";
 import "@/app/styles/globals.css";
 import { Providers } from "@/app/Providers";
 import NavigationBar from "./_components/NavigationBar";
 import HighlightBar from "./_components/HighlightBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Crypto App",
@@ -19,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} bg-cryptoblue-400 dark:bg-dark-100 `}
-      >
+      <body className={`${spaceGrotesk.className} dark:bg-dark-300`}>
         <Providers>
           <HighlightBar />
           <NavigationBar />

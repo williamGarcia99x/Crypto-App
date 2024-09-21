@@ -20,7 +20,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   const daysAgo = useSelector(getDaysAgo);
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["coin_historical_data", selectedCoin, currency, daysAgo],
+    queryKey: ["coin_historical_data", selectedCoin.id, currency, daysAgo],
     queryFn: ({ queryKey }) => {
       const [_, _coinId, _currency, _daysAgo] = queryKey;
       if (_coinId === "") return null;
@@ -34,7 +34,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   }
 
   return (
-    <div className="relative min-[935px]:grid min-[935px]:grid-cols-2">
+    <div className="relative gap-6 min-[935px]:grid min-[935px]:grid-cols-2">
       {!isWideViewPort && (
         <button
           className="absolute right-4 z-50"
@@ -47,14 +47,14 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
 
       {(isWideViewPort || showPriceChart) && (
         <PriceChart
-          coinId={selectedCoin}
+          selectedCoin={selectedCoin}
           days={daysAgo}
           priceData={data?.prices as number[][]}
         />
       )}
       {(isWideViewPort || !showPriceChart) && (
         <VolumeChart
-          coinId={selectedCoin}
+          selectedCoin={selectedCoin}
           days={daysAgo}
           volumeData={data?.totalVolumes as number[][]}
         />
