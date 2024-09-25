@@ -4,20 +4,23 @@ import { getCoinHistoricalChartData } from "@/app/_services/apiCoinData";
 import { useQuery } from "@tanstack/react-query";
 import PriceChart from "./PriceChart";
 import VolumeChart from "./VolumeChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "@/app/_hooks/useMediaQuery";
 import { useSelector } from "react-redux";
 import { getCoin, getDaysAgo } from "../homeSlice";
+import { useTheme } from "next-themes";
 
 type CoinVisualOverviewProps = {
   currency: string;
 };
 
 function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const [showPriceChart, setShowPriceChart] = useState(true);
   const isWideViewPort = useMediaQuery("(min-width: 935px)");
   const selectedCoin = useSelector(getCoin);
   const daysAgo = useSelector(getDaysAgo);
+  const { theme } = useTheme();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["coin_historical_data", selectedCoin.id, currency, daysAgo],
@@ -26,21 +29,64 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
       if (_coinId === "") return null;
       return getCoinHistoricalChartData(_coinId, _currency, _daysAgo);
     },
-    gcTime: 30000,
+    staleTime: 60000,
   });
 
-  if (isPending) {
-    return <p>Loading Data...</p>;
+  useEffect(function () {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <div className="relative w-full max-w-[1700px] grid-cols-2 gap-6 min-[935px]:mx-auto min-[935px]:grid">
+        <div className="aspect-2/1 rounded-2xl p-4 shadow-md dark:bg-dark-400">
+          <p className="flex h-full items-center justify-center">Loading ...</p>
+        </div>
+        <div className="hidden aspect-2/1 rounded-2xl p-4 shadow-md dark:bg-dark-400 min-[935px]:block">
+          <p className="flex h-full items-center justify-center">Loading ...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="relative gap-6 min-[935px]:grid min-[935px]:grid-cols-2">
+    <div className="relative w-full max-w-[1700px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
       {!isWideViewPort && (
         <button
-          className="absolute right-4 z-50"
+          className="absolute right-4 top-4 z-50 rounded-full border-light-100 bg-light-100 bg-opacity-40 p-2 ring-[0.67px] ring-light-100 dark:bg-opacity-70"
           onClick={() => setShowPriceChart((state) => !state)}
         >
-          {showPriceChart ? "->" : "<-"}
+          {showPriceChart ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke={theme === "light" ? "black" : "white"}
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          )}
         </button>
       )}
       {/* In mobile view, this space should be shared by the PriceChart and VolumeChart. If it's spacious enough, we can display both of them side by side */}
@@ -50,6 +96,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
           selectedCoin={selectedCoin}
           days={daysAgo}
           priceData={data?.prices as number[][]}
+          isPending={isPending}
         />
       )}
       {(isWideViewPort || !showPriceChart) && (
@@ -57,6 +104,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
           selectedCoin={selectedCoin}
           days={daysAgo}
           volumeData={data?.totalVolumes as number[][]}
+          isPending={isPending}
         />
       )}
     </div>

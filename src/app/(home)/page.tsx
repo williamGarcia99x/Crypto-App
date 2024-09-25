@@ -9,12 +9,14 @@ export default async function Home() {
 
   return (
     <main className="">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-10">
         <CoinCarousel coinsData={data} />
         <CoinVisualOverview currency={"usd"} />
         <IntervalSelector />
       </div>
-      <CoinsTable />
+      <div>
+        <CoinsTable coinsData={data} />
+      </div>
     </main>
   );
 }

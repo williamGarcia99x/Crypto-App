@@ -28,16 +28,16 @@ function CoinCarousel({ coinsData }: CoinCarouselProps) {
       <Carousel className="w-[85%]">
         <CarouselContent className="-ml-1">
           {testCoinData.map((el, index) => (
-            <CarouselItem key={el.id} className="basis-[1/3] pl-1 ">
+            <CarouselItem key={el.id} className="basis-[1/3] pl-1">
               <button
-                className={`flex justify-center gap-1 p-2 rounded-md w-[90px] items-center ${
+                className={`flex w-[90px] items-center justify-center gap-1 rounded-md p-2 ${
                   el.id === selectedCoin.id
                     ? "bg-cryptoblue-790"
                     : "bg-cryptodark-810"
                 }`}
                 onClick={() => dispatch(setCoin(el))}
               >
-                <div className="relative w-6 h-6 sm:w-8 sm:h-8 bg-cryptoblue-100">
+                <div className="relative h-6 w-6 sm:h-8 sm:w-8">
                   <Image
                     alt={`Image of ${el.name}`}
                     src={el.image}
@@ -45,13 +45,13 @@ function CoinCarousel({ coinsData }: CoinCarouselProps) {
                     fill
                   />
                 </div>
-                <span className="uppercase text-sm">{el.symbol}</span>
+                <span className="text-sm uppercase">{el.symbol}</span>
               </button>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="bg-cryptoblue-250 hidden min-[935px]:inline-flex" />
-        <CarouselNext className="bg-cryptoblue-250 hidden min-[935px]:inline-flex" />
+        <CarouselPrevious className="hidden bg-cryptoblue-250 min-[935px]:inline-flex" />
+        <CarouselNext className="hidden bg-cryptoblue-250 min-[935px]:inline-flex" />
       </Carousel>
     </div>
   );
