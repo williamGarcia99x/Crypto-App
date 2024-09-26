@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.className}bg-[#f3f5f9] dark:bg-dark-300`}
+        className={`${spaceGrotesk.className} bg-[#f3f5f9] dark:bg-dark-300`}
       >
         <Providers>
           <HighlightBar />

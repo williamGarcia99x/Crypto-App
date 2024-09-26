@@ -58,7 +58,7 @@ export default function VolumeChart({
     );
 
   return (
-    <div className="aspect-2/1 rounded-2xl p-4 shadow-md dark:bg-dark-400">
+    <div className="aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400">
       {isPending ? (
         <p className="flex h-full items-center justify-center">Loading ...</p>
       ) : (

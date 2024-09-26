@@ -4,7 +4,7 @@ const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 export async function getCoinHistoricalChartData(
   coinId: string,
   currency: string,
-  days: string
+  days: string,
 ): Promise<{
   prices: number[][];
   marketCaps: number[][];
@@ -41,6 +41,7 @@ export async function getCoinHistoricalChartData(
     throw error; // Re-throw the error so it can be handled by the calling function
   }
 }
+//TODO This query may need to change so that more results are fetched and to handle different crypto currencies and to obtain the necessary price_change_percentages data
 export async function getCoinList() {
   try {
     // Make the fetch request
