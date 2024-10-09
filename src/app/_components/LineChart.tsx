@@ -115,6 +115,10 @@ function LineChart({
             display: false,
           },
         },
+        animation: {
+          duration: 500,
+          easing: "easeInOutSine",
+        },
       }}
     />
   );

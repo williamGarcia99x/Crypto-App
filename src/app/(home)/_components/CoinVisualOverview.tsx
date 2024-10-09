@@ -2,13 +2,12 @@
 
 import { getCoinHistoricalChartData } from "@/app/_services/apiCoinData";
 import { useQuery } from "@tanstack/react-query";
-import PriceChart from "./PriceChart";
-import VolumeChart from "./VolumeChart";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@/app/_hooks/useMediaQuery";
 import { useSelector } from "react-redux";
 import { getCoin, getDaysAgo } from "../homeSlice";
 import { useTheme } from "next-themes";
+import GenericChart from "./GenericChart";
 
 type CoinVisualOverviewProps = {
   currency: string;
@@ -38,11 +37,11 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
 
   if (!isMounted) {
     return (
-      <div className="relative w-full max-w-[1700px] grid-cols-2 gap-6 min-[935px]:mx-auto min-[935px]:grid">
-        <div className="aspect-2/1 rounded-2xl p-4 shadow-md dark:bg-dark-400">
+      <div className="relative w-full max-w-[1700px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
+        <div className="aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400">
           <p className="flex h-full items-center justify-center">Loading ...</p>
         </div>
-        <div className="hidden aspect-2/1 rounded-2xl p-4 shadow-md dark:bg-dark-400 min-[935px]:block">
+        <div className="hidden aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400 min-[935px]:block">
           <p className="flex h-full items-center justify-center">Loading ...</p>
         </div>
       </div>
@@ -51,7 +50,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
 
   return (
     <div className="relative w-full max-w-[1700px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
-      {!isWideViewPort && (
+      {!isWideViewPort && !isPending && (
         <button
           className="absolute right-4 top-4 z-50 rounded-full border-light-100 bg-light-100 bg-opacity-40 p-2 ring-[0.67px] ring-light-100 dark:bg-opacity-70"
           onClick={() => setShowPriceChart((state) => !state)}
@@ -92,19 +91,31 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
       {/* In mobile view, this space should be shared by the PriceChart and VolumeChart. If it's spacious enough, we can display both of them side by side */}
 
       {(isWideViewPort || showPriceChart) && (
-        <PriceChart
+        <GenericChart
           selectedCoin={selectedCoin}
           days={daysAgo}
-          priceData={data?.prices as number[][]}
+          data={data?.prices as number[][]}
           isPending={isPending}
+          chartTitle={selectedCoin.name}
+          lineColor={[
+            "#7878FA",
+            "rgb(120 , 120, 250, 0.5)",
+            "rgb(120 , 120, 250, 0.0)",
+          ]}
         />
       )}
       {(isWideViewPort || !showPriceChart) && (
-        <VolumeChart
+        <GenericChart
           selectedCoin={selectedCoin}
           days={daysAgo}
-          volumeData={data?.totalVolumes as number[][]}
+          data={data?.totalVolumes as number[][]}
           isPending={isPending}
+          chartTitle={`Volume: ${selectedCoin.name}`}
+          lineColor={[
+            "rgba(216,120,250,1)",
+            "rgba(216,120,250,0.6)",
+            "rgba(216,120,250,0.1)",
+          ]}
         />
       )}
     </div>
