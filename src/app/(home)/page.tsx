@@ -4,9 +4,6 @@ import IntervalSelector from "./_components/IntervalSelector";
 import CoinVisualOverview from "./_components/CoinVisualOverview";
 import { getCoinList } from "../_services/apiCoinData";
 
-//Revalidate the data cache every 60 seconds
-export const revalidate = 60;
-
 export default async function Home() {
   const data = await getCoinList();
 
@@ -18,7 +15,7 @@ export default async function Home() {
         <IntervalSelector />
       </div>
       <div className="my-8">
-        <CoinsTable coinsData={data} />
+        <CoinsTable currency={"usd"} />
       </div>
     </main>
   );

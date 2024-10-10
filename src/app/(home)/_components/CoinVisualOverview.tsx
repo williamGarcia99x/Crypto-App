@@ -49,7 +49,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   }
 
   return (
-    <div className="relative w-full max-w-[1700px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
+    <div className="relative w-full max-w-[1500px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
       {!isWideViewPort && !isPending && (
         <button
           className="absolute right-4 top-4 z-50 rounded-full border-light-100 bg-light-100 bg-opacity-40 p-2 ring-[0.67px] ring-light-100 dark:bg-opacity-70"

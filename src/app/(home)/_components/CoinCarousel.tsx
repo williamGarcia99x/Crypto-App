@@ -19,7 +19,6 @@ type CoinCarouselProps = {
 };
 
 function CoinCarousel({ coinsData }: CoinCarouselProps) {
-  const isWideViewPort = useMediaQuery("(min-width: 935px)");
   const testCoinData = coinsData.slice(0, 20);
   const selectedCoin = useSelector(getCoin);
   const dispatch: AppDispatch = useDispatch();
