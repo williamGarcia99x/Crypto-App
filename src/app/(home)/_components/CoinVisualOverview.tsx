@@ -97,11 +97,11 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
           data={data?.prices as number[][]}
           isPending={isPending}
           chartTitle={selectedCoin.name}
-          lineColor={[
-            "#7878FA",
-            "rgb(120 , 120, 250, 0.5)",
-            "rgb(120 , 120, 250, 0.0)",
-          ]}
+          lineColor={{
+            borderColor: "#7878FA",
+            gradientStart: "rgb(120 , 120, 250, 0.5)",
+            gradientStop: "rgb(120 , 120, 250, 0.0)",
+          }}
         />
       )}
       {(isWideViewPort || !showPriceChart) && (
@@ -111,11 +111,11 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
           data={data?.totalVolumes as number[][]}
           isPending={isPending}
           chartTitle={`Volume: ${selectedCoin.name}`}
-          lineColor={[
-            "rgba(216,120,250,1)",
-            "rgba(216,120,250,0.6)",
-            "rgba(216,120,250,0.1)",
-          ]}
+          lineColor={{
+            borderColor: "rgba(216,120,250,1)",
+            gradientStart: "rgba(216,120,250,0.5)",
+            gradientStop: "rgba(216,120,250,0.0)",
+          }}
         />
       )}
     </div>

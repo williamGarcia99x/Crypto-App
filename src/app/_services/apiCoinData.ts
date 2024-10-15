@@ -50,7 +50,7 @@ export async function getCoins(
   try {
     // Make the fetch request
     const res = await fetch(`
-        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C%2024h%2C%207d&${apiKey}`);
+        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&${apiKey}`);
     //
     // Check if the response is not OK (i.e., status code not in the range 200-299)
     if (!res.ok) {

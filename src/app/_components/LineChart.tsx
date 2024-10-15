@@ -3,12 +3,14 @@ import { useTheme } from "next-themes";
 import { Line } from "react-chartjs-2";
 import { useMediaQuery } from "../_hooks/useMediaQuery";
 import { useEffect, useState } from "react";
+import { ColorChartSpecs } from "@/lib/types";
 
 type LineChartProps = {
   xLabels: unknown[];
   dataPoints: unknown[];
-  lineColor: string;
+  lineColor: ColorChartSpecs;
   options: { days: number };
+  isSpark7dChart?: boolean;
 };
 
 //#8d8db1
@@ -17,6 +19,7 @@ function LineChart({
   dataPoints,
   options,
   lineColor,
+  isSpark7dChart,
 }: LineChartProps) {
   const [gradient, setGradient] = useState(calculateGradientValue);
 
@@ -48,12 +51,20 @@ function LineChart({
         datasets: [
           {
             data: dataPoints,
-            borderColor: lineColor[0],
+            borderColor: lineColor.borderColor,
             backgroundColor: (context) => {
               const ctx = context.chart.ctx;
-              const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-              gradient.addColorStop(0, lineColor[1]);
-              gradient.addColorStop(calculateGradientValue(), lineColor[2]);
+              const gradient = ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                isSpark7dChart ? 270 : 400,
+              );
+              gradient.addColorStop(0, lineColor.gradientStart);
+              gradient.addColorStop(
+                isSpark7dChart ? 0.33 : calculateGradientValue(),
+                lineColor.gradientStop,
+              );
               return gradient;
             },
             pointHoverRadius: 4,
@@ -84,6 +95,7 @@ function LineChart({
               },
             },
             ticks: {
+              display: isSpark7dChart ? false : true,
               maxTicksLimit: 8, // Reduce the number of labels on x-axis to 7
               align: options.days === 7 ? "end" : "start",
               color: theme === "light" ? "#9c9bb6" : "#8d8db1",

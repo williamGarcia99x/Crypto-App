@@ -1,5 +1,5 @@
 import { getCoins } from "@/app/_services/apiCoinData";
-import { CoinDescriptionShort } from "@/lib/types";
+import { CoinDescriptionLong, CoinDescriptionShort } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useCoinsList(
@@ -9,7 +9,7 @@ export default function useCoinsList(
 ): {
   isPending: boolean;
   error: Error | null;
-  data: Array<CoinDescriptionShort>;
+  data: Array<CoinDescriptionLong>;
 } {
   const { isPending, error, data } = useQuery({
     queryKey: ["coin_list", currency, sortOrder, currentPage],

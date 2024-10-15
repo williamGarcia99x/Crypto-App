@@ -17,6 +17,12 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        coinsTable: {
+          green: "#00B1A7",
+          red: "#FE2264",
+          headerLight: "#424286",
+          headerDark: "#D1D1D1",
+        },
         charts: {
           "volume-chart": "#D878FA99",
         },
@@ -26,10 +32,12 @@ const config: Config = {
         dark: {
           "75": "#7878FA",
           "100": "#42428b",
-          "200": " #232336",
+          "200": "#232336",
           "300": "#13121a",
+          "350": "#191925", // Deep indigo added here
           "400": "#191932",
         },
+
         greys: {
           "lavender-100": "#E4E4F0",
           "lavender-200": "#A7A7CC",

@@ -14,7 +14,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { CoinDescriptionShort } from "@/lib/types";
+import { CoinDescriptionShort, ColorChartSpecs } from "@/lib/types";
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +33,7 @@ type PriceChartProps = {
   data: number[][];
   isPending: boolean;
   chartTitle: string;
-  lineColor: [string, string, string];
+  lineColor: ColorChartSpecs;
 };
 
 export default function GenericChart({
@@ -81,7 +81,7 @@ export default function GenericChart({
           xLabels={xLabels}
           dataPoints={dataPoints}
           options={{ days }}
-          lineColor={lineColor as unknown as string}
+          lineColor={lineColor}
         />
       </div>
     </div>

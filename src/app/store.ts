@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userPreferencesReducer from "@/app/userPreferencesSlice";
 import homeReducer from "./(home)/homeSlice";
 
 export const store = configureStore({
