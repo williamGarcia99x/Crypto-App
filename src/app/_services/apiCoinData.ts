@@ -2,8 +2,9 @@ const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 
 export async function getCoinHistoricalChartData(
-  coinId,
-  currency
+  coinId: string,
+  currency: string,
+  days: string,
 ): Promise<{
   prices: number[][];
   marketCaps: number[][];
@@ -12,7 +13,7 @@ export async function getCoinHistoricalChartData(
   try {
     // Make the fetch request
     const res = await fetch(`
-        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=1&${apiKey}`);
+        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&${apiKey}`);
 
     // Check if the response is not OK (i.e., status code not in the range 200-299)
     if (!res.ok) {
@@ -37,6 +38,63 @@ export async function getCoinHistoricalChartData(
     // Handle errors (e.g., network issues, API errors)
     // eslint-disable-next-line no-console
     console.error("Error in getCoinHistoricalChartData. ", error);
+    throw error; // Re-throw the error so it can be handled by the calling function
+  }
+}
+
+export async function getCoins(
+  currency: string,
+  sortOrder: string,
+  currentPage: number,
+) {
+  try {
+    // Make the fetch request
+    const res = await fetch(`
+        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&${apiKey}`);
+    //
+    // Check if the response is not OK (i.e., status code not in the range 200-299)
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(`Error fetching data: ${res.status} ${error}`);
+    }
+
+    // Parse the response as JSON
+    const data = await res.json();
+
+    // Return the structured data
+    return data;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in getCoins", error);
+    throw error; // Re-throw the error so it can be handled by the calling function
+  }
+}
+
+//TODO This query may need to change so that more results are fetched and to handle different crypto currencies and to obtain the necessary price_change_percentages data
+export async function getCoinList() {
+  try {
+    // Make the fetch request
+    const res = await fetch(`
+        ${baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=1h`);
+    //
+    // Check if the response is not OK (i.e., status code not in the range 200-299)
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(`Error fetching data: ${res.status} ${error}`);
+    }
+
+    // Parse the response as JSON
+    const data = await res.json();
+
+    // Return the structured data
+    return data;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in getCoinList() ", error);
     throw error; // Re-throw the error so it can be handled by the calling function
   }
 }

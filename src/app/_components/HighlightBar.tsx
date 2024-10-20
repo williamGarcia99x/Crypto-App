@@ -1,5 +1,5 @@
 function HighlightBar() {
-  return <div></div>;
+  return <div>Crypto Statistics</div>;
 }
 
 export default HighlightBar;
