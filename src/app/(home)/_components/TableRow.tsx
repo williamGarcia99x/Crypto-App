@@ -29,7 +29,7 @@ function TableRow({ coin, rowColor }: TableRowProps) {
       key={coin.id}
       className="grid grid-cols-[150px_100px_70px] items-center justify-between rounded-xl bg-white px-4 py-3 dark:bg-dark-350 min-[450px]:grid-cols-[150px_100px_70px_70px] min-[530px]:grid-cols-[150px_100px_70px_70px_70px] md:grid-cols-[150px_100px_70px_70px_70px_180px] lg:grid-cols-[150px_100px_70px_70px_70px_180px_180px] xl:grid-cols-[150px_100px_70px_70px_70px_180px_180px_180px]"
     >
-      <TableDescription className="flex gap-2">
+      <TableDescription className="flex items-center gap-2">
         <figure className="relative block h-8 w-8 flex-shrink-0">
           <Image
             alt={`image of ${coin.image}`}
@@ -40,8 +40,8 @@ function TableRow({ coin, rowColor }: TableRowProps) {
           />
         </figure>
         <div className="flex flex-col">
-          <p className="text-start uppercase">{coin.symbol}</p>
-          <p className="text-start text-xs">{coin.name}</p>
+          <p className="uppercase md:text-lg">{coin.symbol}</p>
+          <p className="text-xs md:text-sm">{coin.name}</p>
         </div>
       </TableDescription>
       {/* 2nd column */}
@@ -72,7 +72,7 @@ function TableRow({ coin, rowColor }: TableRowProps) {
       </TableDescription>
       {/* 6th column */}
       <TableDescription className="hidden md:block">
-        <div className="flex justify-between">
+        <div className="flex justify-between text-sm">
           <span>{formatLargeNumber(volumeMarketCapBar.start)}</span>
           <span>{formatLargeNumber(volumeMarketCapBar.end)}</span>
         </div>
@@ -84,7 +84,7 @@ function TableRow({ coin, rowColor }: TableRowProps) {
       </TableDescription>
       {/* 7th column */}
       <TableDescription className="hidden lg:block">
-        <div className="flex justify-between">
+        <div className="flex justify-between text-sm">
           <span>{formatLargeNumber(circulatingTotalSupplyBar.start)}</span>
           <span>{formatLargeNumber(circulatingTotalSupplyBar.end)}</span>
         </div>

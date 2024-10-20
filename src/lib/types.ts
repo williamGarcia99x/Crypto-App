@@ -19,7 +19,7 @@ export type CoinDescriptionLong = CoinDescriptionShort & {
 
 export type ColorChartSpecs = {
   borderColor: string;
-  progressBarBgColor: string;
+  progressBarBgColor?: string;
   gradientStart: string;
   gradientStop: string;
 };

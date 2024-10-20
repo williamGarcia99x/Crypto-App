@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { getCoin, getDaysAgo } from "../homeSlice";
 import { useTheme } from "next-themes";
 import GenericChart from "./GenericChart";
+import ChevronRight from "@/app/_icons/ChevronRight";
+import ChevronLeft from "@/app/_icons/ChevronLeft";
 
 type CoinVisualOverviewProps = {
   currency: string;
@@ -19,7 +21,6 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   const isWideViewPort = useMediaQuery("(min-width: 935px)");
   const selectedCoin = useSelector(getCoin);
   const daysAgo = useSelector(getDaysAgo);
-  const { theme } = useTheme();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["coin_historical_data", selectedCoin.id, currency, daysAgo],
@@ -55,37 +56,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
           className="absolute right-4 top-4 z-50 rounded-full border-light-100 bg-light-100 bg-opacity-40 p-2 ring-[0.67px] ring-light-100 dark:bg-opacity-70"
           onClick={() => setShowPriceChart((state) => !state)}
         >
-          {showPriceChart ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke={theme === "light" ? "black" : "white"}
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
-            </svg>
-          )}
+          {showPriceChart ? <ChevronRight /> : <ChevronLeft />}
         </button>
       )}
       {/* In mobile view, this space should be shared by the PriceChart and VolumeChart. If it's spacious enough, we can display both of them side by side */}

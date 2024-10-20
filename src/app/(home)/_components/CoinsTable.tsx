@@ -11,6 +11,8 @@ import useCoinsList from "../_hooks/useCoinsList";
 import TableRow from "./TableRow";
 import { ColorChartSpecs } from "@/lib/types";
 import { useTheme } from "next-themes";
+import ChevronLeft from "@/app/_icons/ChevronLeft";
+import ChevronRight from "@/app/_icons/ChevronRight";
 
 type CoinsTableProps = {
   currency: string;
@@ -146,17 +148,16 @@ function CoinsTable({ currency }: CoinsTableProps) {
   const [sortOrder, setSortOrder] = useState("market_cap_desc");
   const { theme } = useTheme();
 
-  for (let i = 0; i < cryptoCharts.length; i++) {
-    if (theme === "light")
-      cryptoCharts[i].gradientStop = "rgba(255, 255, 255, 0.22)";
-    else cryptoCharts[i].gradientStop = "rgba(35, 35, 54, 0)";
-  }
-
   const { isPending, error, data } = useCoinsList(
     currency,
     sortOrder,
     currentPage,
   );
+  for (let i = 0; i < cryptoCharts.length; i++) {
+    if (theme === "light")
+      cryptoCharts[i].gradientStop = "rgba(255, 255, 255, 0.22)";
+    else cryptoCharts[i].gradientStop = "rgba(35, 35, 54, 0)";
+  }
 
   function handlePageChange(newPage: number) {
     if (newPage === 0) return;
@@ -206,19 +207,19 @@ function CoinsTable({ currency }: CoinsTableProps) {
           </React.Fragment>
         ))}
       </section>
-      <Pagination>
+      <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
             <button onClick={() => handlePageChange(currentPage - 1)}>
-              {"<"}
+              <ChevronLeft />
             </button>
           </PaginationItem>
-          <PaginationItem>
-            <p>{currentPage}</p>
+          <PaginationItem className="text-md mx-10">
+            <p>Page: {currentPage}</p>
           </PaginationItem>
           <PaginationItem>
             <button onClick={() => handlePageChange(currentPage + 1)}>
-              {">"}
+              <ChevronRight />
             </button>
           </PaginationItem>
         </PaginationContent>
