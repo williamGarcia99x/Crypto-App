@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@tailwind": ["./tailwind.config.ts"]
     }
   },
   "include": [
