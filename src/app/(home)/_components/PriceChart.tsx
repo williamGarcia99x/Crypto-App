@@ -1,19 +1,26 @@
 "use client";
 
-import "chartjs-adapter-date-fns";
 
+import "chartjs-adapter-date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { getCoinHistoricalChartData } from "@/app/_services/apiCoinData";
+import { useState } from "react";
+import { Line } from "react-chartjs-2";
+import { format } from "date-fns";
 import LineChart from "@/app/_components/LineChart";
 import tailwindConfig from "@tailwind";
+
 import {
-  CategoryScale,
   Chart as ChartJS,
-  Filler,
-  LinearScale,
-  LineElement,
-  PointElement,
+  CategoryScale,
   TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
+  Legend,
+  ChartData,
 } from "chart.js";
 
 ChartJS.register(
@@ -23,9 +30,10 @@ ChartJS.register(
   PointElement,
   LineElement,
   Title,
-  Tooltip,
-  Filler
+  Tooltip
 );
+
+
 
 type PriceChartProps = {
   xLabels: unknown[];

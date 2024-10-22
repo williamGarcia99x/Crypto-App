@@ -2,9 +2,12 @@ const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 
 export async function getCoinHistoricalChartData(
+
   coinId: string,
   currency: string,
   days: string
+
+
 ): Promise<{
   prices: number[][];
   marketCaps: number[][];
