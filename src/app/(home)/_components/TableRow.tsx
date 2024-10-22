@@ -78,7 +78,7 @@ function TableRow({ coin, rowColor }: TableRowProps) {
         </div>
         <Progress
           fillColor={rowColor.borderColor}
-          backgroundColor={rowColor.progressBarBgColor}
+          backgroundColor={rowColor.progressBarBgColor as string}
           value={volumeMarketCapBar.percentFull}
         />
       </TableDescription>
@@ -90,7 +90,7 @@ function TableRow({ coin, rowColor }: TableRowProps) {
         </div>
         <Progress
           fillColor={rowColor.borderColor}
-          backgroundColor={rowColor.progressBarBgColor}
+          backgroundColor={rowColor.progressBarBgColor as string}
           value={circulatingTotalSupplyBar.percentFull}
         />
       </TableDescription>

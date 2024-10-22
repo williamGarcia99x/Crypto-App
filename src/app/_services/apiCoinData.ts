@@ -42,6 +42,13 @@ export async function getCoinHistoricalChartData(
   }
 }
 
+/**
+ *
+ * @param currency
+ * @param sortOrder
+ * @param currentPage
+ * @returns list of coin data that is displayed by the CoinsTable component
+ */
 export async function getCoins(
   currency: string,
   sortOrder: string,
@@ -72,29 +79,30 @@ export async function getCoins(
   }
 }
 
-//TODO This query may need to change so that more results are fetched and to handle different crypto currencies and to obtain the necessary price_change_percentages data
-export async function getCoinList() {
+export async function getMarketSummary() {
   try {
-    // Make the fetch request
-    const res = await fetch(`
-        ${baseUrl}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=1h`);
-    //
-    // Check if the response is not OK (i.e., status code not in the range 200-299)
+    const res = await fetch(`${baseUrl}/global`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    });
+
     if (!res.ok) {
       //get the error message
       const { error } = await res.json();
-      throw new Error(`Error fetching data: ${res.status} ${error}`);
+      throw new Error(
+        `Error fetching market summary data: ${res.status} ${error}`,
+      );
     }
 
-    // Parse the response as JSON
     const data = await res.json();
 
-    // Return the structured data
-    return data;
+    return data.data;
   } catch (error) {
     // Handle errors (e.g., network issues, API errors)
     // eslint-disable-next-line no-console
-    console.error("Error in getCoinList() ", error);
-    throw error; // Re-throw the error so it can be handled by the calling function
+    console.error("Error in getMarketSummary", error);
+    throw error; // Re-throw the error so it can be handled by the calling function}
   }
 }

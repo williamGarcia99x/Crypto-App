@@ -28,6 +28,7 @@ const config: Config = {
         },
         light: {
           "100": "#6161D6",
+          "highlight-bar": "#353570",
         },
         dark: {
           "75": "#7878FA",
@@ -36,6 +37,7 @@ const config: Config = {
           "300": "#13121a",
           "350": "#191925", // Deep indigo added here
           "400": "#191932",
+          "highlight-bar": "#1E1932",
         },
 
         greys: {

@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "@/app/_hooks/useMediaQuery";
 import {
   Carousel,
   CarouselContent,
@@ -12,21 +11,21 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoin, setCoin } from "../homeSlice";
 import { AppDispatch } from "@/app/store";
-import { CoinDescriptionShort } from "@/lib/types";
+import useCoinsList from "../_hooks/useCoinsList";
+import { coinListMockData } from "./data";
 
-type CoinCarouselProps = {
-  coinsData: Array<CoinDescriptionShort>;
-};
+function CoinCarousel() {
+  const { data, isPending, error } = useCoinsList();
 
-function CoinCarousel({ coinsData }: CoinCarouselProps) {
-  const testCoinData = coinsData.slice(0, 20);
+  const menuOfOptions = isPending ? coinListMockData : data;
+
   const selectedCoin = useSelector(getCoin);
   const dispatch: AppDispatch = useDispatch();
   return (
     <div className="flex justify-center">
       <Carousel className="w-[85%]">
         <CarouselContent className="-ml-1">
-          {testCoinData.map((el, index) => (
+          {menuOfOptions.map((el, index) => (
             <CarouselItem key={el.id} className="basis-[1/3] pl-1">
               <button
                 className={`flex w-[90px] items-center justify-center gap-1 rounded-md p-2 ${
