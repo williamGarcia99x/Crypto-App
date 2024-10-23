@@ -17,7 +17,7 @@ function HighlightBar() {
   });
 
   return (
-    <div className="bg-light-highlight-bar dark:bg-dark-highlight-bar flex h-14 overflow-x-auto border border-[#FFFFFF1A] px-4 text-sm text-white min-[738px]:justify-center">
+    <div className="custom-scrollbar sticky top-0 z-50 flex h-14 overflow-x-auto border border-[#FFFFFF1A] bg-light-highlight-bar px-4 text-sm text-white dark:bg-dark-highlight-bar min-[738px]:justify-center">
       {!isPending && (
         <div className="flex min-w-max items-center gap-4">
           {/* Display first three items always */}

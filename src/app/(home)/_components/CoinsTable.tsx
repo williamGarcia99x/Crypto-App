@@ -207,7 +207,7 @@ function CoinsTable({ currency }: CoinsTableProps) {
           </React.Fragment>
         ))}
       </section>
-      <Pagination className="mt-4">
+      <Pagination className="mb-16 mt-4">
         <PaginationContent>
           <PaginationItem>
             <button onClick={() => handlePageChange(currentPage - 1)}>

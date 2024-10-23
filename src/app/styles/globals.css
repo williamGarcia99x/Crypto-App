@@ -149,4 +149,16 @@ body {
 }
 
 @layer components {
+  /* global.css or your main stylesheet */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0); /* Thumb color */
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5); /* Thumb color */
+  }
 }

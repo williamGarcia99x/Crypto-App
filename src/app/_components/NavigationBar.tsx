@@ -1,17 +1,23 @@
 import Link from "next/link";
-
 import ThemeSwitch from "./ThemeSwitch";
+import LogoIcon from "../_icons/LogoIcon";
+import HomeIcon from "../_icons/HomeIcon";
+import CoinExchangeIcon from "../_icons/CoinExchangeIcon";
+import StackIcon from "../_icons/StackIcon";
 
 function NavigationBar() {
+  //const isActive = (href: string) => router.pathname === href;
+
   return (
-    <nav className="flex justify-between ">
+    <div className="">
       <div>
-        <Link href="/">Home</Link>
-        <Link href="/portfolio">Portfolio</Link>
+        <div className="flex">
+          <LogoIcon />
+        </div>
       </div>
-      <input type="text" className="bg-cryptoblue-250 opacity-50 " />
+      <input type="text" className="bg-cryptoblue-250 opacity-50" />
       <ThemeSwitch />
-    </nav>
+    </div>
   );
 }
 

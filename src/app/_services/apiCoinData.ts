@@ -79,6 +79,10 @@ export async function getCoins(
   }
 }
 
+/**
+ *
+ * @returns Market summary data that is displayed in the hightlight bar
+ */
 export async function getMarketSummary() {
   try {
     const res = await fetch(`${baseUrl}/global`, {

@@ -5,6 +5,7 @@ import "@/app/styles/globals.css";
 import { Providers } from "@/app/Providers";
 import NavigationBar from "./_components/NavigationBar";
 import HighlightBar from "./_components/HighlightBar";
+import BottomNav from "./_components/BottomNav";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <HighlightBar />
           <NavigationBar />
           <div className="p-4">{children}</div>
+          <BottomNav />
         </Providers>
       </body>
     </html>
