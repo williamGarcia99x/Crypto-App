@@ -1,17 +1,25 @@
 function SunIcon() {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 17 16"
       fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="size-8"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+        d="M8.47201 12.3337C10.8652 12.3337 12.8053 10.3936 12.8053 8.00033C12.8053 5.60709 10.8652 3.66699 8.47201 3.66699C6.07877 3.66699 4.13867 5.60709 4.13867 8.00033C4.13867 10.3936 6.07877 12.3337 8.47201 12.3337Z"
+        stroke="#424286"
+        strokeOpacity="1" // Replaced `stroke-opacity` with `strokeOpacity`
+        strokeLinecap="round" // Replaced `stroke-linecap` with `strokeLinecap`
+        strokeLinejoin="round" // Replaced `stroke-linejoin` with `strokeLinejoin`
+      />
+      <path
+        d="M13.2333 12.7597L13.1466 12.673M13.1466 3.32634L13.2333 3.23967L13.1466 3.32634ZM3.71331 12.7597L3.79997 12.673L3.71331 12.7597ZM8.47331 1.38634V1.33301V1.38634ZM8.47331 14.6663V14.613V14.6663ZM1.85997 7.99967H1.80664H1.85997ZM15.14 7.99967H15.0866H15.14ZM3.79997 3.32634L3.71331 3.23967L3.79997 3.32634Z"
+        stroke="#424286"
+        strokeOpacity="1" // Replaced `stroke-opacity` with `strokeOpacity`
+        strokeLinecap="round" // Replaced `stroke-linecap` with `strokeLinecap`
+        strokeLinejoin="round" // Replaced `stroke-linejoin` with `strokeLinejoin`
       />
     </svg>
   );

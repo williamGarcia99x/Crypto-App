@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // eslint-disable-next-line camelcase
-import { Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "@/app/styles/globals.css";
 import { Providers } from "@/app/Providers";
 import NavigationBar from "./_components/NavigationBar";
@@ -10,8 +10,8 @@ import BottomNav from "./_components/BottomNav";
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Crypto App",
-  description: "Crypto App made by William",
+  title: "CoinFolio",
+  description: "An app by William",
 };
 
 export default function RootLayout({
