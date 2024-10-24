@@ -39,6 +39,7 @@ function CoinCarousel() {
                   <Image
                     alt={`Image of ${el.name}`}
                     src={el.image}
+                    sizes="32x32"
                     className="object-cover"
                     fill
                   />
@@ -48,8 +49,8 @@ function CoinCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden bg-cryptoblue-250 min-[935px]:inline-flex" />
-        <CarouselNext className="hidden bg-cryptoblue-250 min-[935px]:inline-flex" />
+        <CarouselPrevious className="md-plus:inline-flex hidden bg-cryptoblue-250" />
+        <CarouselNext className="md-plus:inline-flex hidden bg-cryptoblue-250" />
       </Carousel>
     </div>
   );

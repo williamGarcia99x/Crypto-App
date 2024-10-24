@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "md-plus": "935px",
+      },
+
       aspectRatio: {
         "2/1": "2/1",
       },

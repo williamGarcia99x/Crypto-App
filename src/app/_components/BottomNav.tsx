@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-function BottomNav() {
+function BottomNav({ className = "" }: { className?: string }) {
   const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
   const { theme } = useTheme();
@@ -21,11 +21,21 @@ function BottomNav() {
 
   if (!isMounted) {
     return (
-      <nav className="fixed bottom-0 h-20 w-full border-t-2 border-[#1919251c] bg-white bg-opacity-60 py-2 backdrop-blur-sm dark:bg-dark-350 dark:bg-opacity-90"></nav>
+      <nav
+        className={twMerge(
+          "fixed bottom-0 h-20 w-full border-t-2 border-[#1919251c] bg-white bg-opacity-60 py-2 backdrop-blur-sm dark:bg-dark-350 dark:bg-opacity-90",
+          className,
+        )}
+      ></nav>
     );
   }
   return (
-    <nav className="fixed bottom-0 h-20 w-full border-t-2 border-[#1919251c] bg-white bg-opacity-60 py-2 backdrop-blur-sm dark:bg-dark-350 dark:bg-opacity-90">
+    <nav
+      className={twMerge(
+        "fixed bottom-0 h-20 w-full border-t-2 border-[#1919251c] bg-white bg-opacity-60 py-2 backdrop-blur-sm dark:bg-dark-350 dark:bg-opacity-90",
+        className,
+      )}
+    >
       <ul className="flex items-center justify-center gap-4">
         <Link
           href="/"

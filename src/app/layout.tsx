@@ -28,7 +28,7 @@ export default function RootLayout({
           <HighlightBar />
           <NavigationBar />
           <div className="p-4">{children}</div>
-          <BottomNav />
+          <BottomNav className="md-plus:hidden" />
         </Providers>
       </body>
     </html>

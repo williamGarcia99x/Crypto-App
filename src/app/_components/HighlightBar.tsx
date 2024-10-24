@@ -21,26 +21,26 @@ function HighlightBar() {
       {!isPending && (
         <div className="flex min-w-max items-center gap-4">
           {/* Display first three items always */}
-          <p className="flex gap-1">
+          <div className="flex gap-1">
             <span className="flex items-center gap-1">
               <CoinLightning />
               Coins
             </span>
             <span>{data.active_cryptocurrencies}</span>
-          </p>
-          <p className="flex gap-1">
+          </div>
+          <div className="flex gap-1">
             <span className="flex items-center gap-1">
               <ExchangeIcon />
               Exchange
             </span>
             <span>{data.markets}</span>
-          </p>
-          <p className="flex items-center">
+          </div>
+          <div className="flex items-center">
             <ChevronUp className="text-coinsTable-green" />
             {/* The currency needs to be the selected one */}
             <span>{formatLargeNumber(data.total_market_cap["usd"])}</span>
-          </p>
-          <p className="flex shrink-0 items-center gap-1">
+          </div>
+          <div className="flex shrink-0 items-center gap-1">
             <span>${formatLargeNumber(data.total_market_cap["btc"])}</span>
             {/* The currency needs to be the selected one */}
             <div className="w-14">
@@ -53,8 +53,8 @@ function HighlightBar() {
                 }
               />
             </div>
-          </p>
-          <p className="flex shrink-0 items-center gap-1">
+          </div>
+          <div className="flex shrink-0 items-center gap-1">
             <Image
               src={
                 "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
@@ -72,8 +72,8 @@ function HighlightBar() {
                 value={data.market_cap_percentage["btc"]}
               />
             </div>
-          </p>
-          <p className="flex shrink-0 items-center gap-1">
+          </div>
+          <div className="flex shrink-0 items-center gap-1">
             <Image
               src={
                 "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
@@ -91,7 +91,7 @@ function HighlightBar() {
                 value={data.market_cap_percentage["eth"]}
               />
             </div>
-          </p>
+          </div>
         </div>
       )}
     </div>

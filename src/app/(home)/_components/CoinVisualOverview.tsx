@@ -38,11 +38,11 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
 
   if (!isMounted) {
     return (
-      <div className="relative w-full max-w-[1700px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
+      <div className="md-plus:mx-auto md-plus:grid md-plus:grid-cols-2 relative w-full max-w-[1700px] gap-6">
         <div className="aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400">
           <p className="flex h-full items-center justify-center">Loading ...</p>
         </div>
-        <div className="hidden aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400 min-[935px]:block">
+        <div className="md-plus:block hidden aspect-2/1 rounded-2xl bg-white p-4 shadow-md dark:bg-dark-400">
           <p className="flex h-full items-center justify-center">Loading ...</p>
         </div>
       </div>
@@ -50,7 +50,7 @@ function CoinVisualOverview({ currency }: CoinVisualOverviewProps) {
   }
 
   return (
-    <div className="relative w-full max-w-[1500px] gap-6 min-[935px]:mx-auto min-[935px]:grid min-[935px]:grid-cols-2">
+    <div className="md-plus:mx-auto md-plus:grid md-plus:grid-cols-2 relative w-full max-w-[1500px] gap-6">
       {!isWideViewPort && !isPending && (
         <button
           className="absolute right-4 top-4 z-10 rounded-full border-light-100 bg-light-100 bg-opacity-40 p-2 ring-[0.67px] ring-light-100 dark:bg-opacity-70"

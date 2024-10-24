@@ -1,17 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-
-import { Button } from "@/components/ui/button";
-import SunIcon from "../_icons/SunIcon";
-import MoonIcon from "../_icons/MoonIcon";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
+import MoonIcon from "../_icons/MoonIcon";
+import SunIcon from "../_icons/SunIcon";
 
 export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
@@ -29,20 +21,22 @@ export default function ThemeSwitch() {
   // Prevent rendering on the server side to avoid hydration mismatch. Render this skeleton instead
   if (!mounted) {
     return (
-      <div className="bg-light-50 rounded-md">
-        {/* opacity-0 so that the content of the button doesn't show. */}
-        <button className="p-2 opacity-0">
-          <SunIcon />
-        </button>
-      </div>
+      <button className="bg-light-50 rounded-md border p-2 dark:bg-dark-350">
+        <SunIcon fillColor="" />
+      </button>
     );
   }
 
   return (
-    <div className="bg-light-50 rounded-md">
-      <button className="p-2" onClick={toggleTheme}>
-        {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-      </button>
-    </div>
+    <button
+      className="bg-light-50 rounded-md border p-2 dark:bg-dark-350"
+      onClick={toggleTheme}
+    >
+      {theme === "dark" ? (
+        <SunIcon fillColor={"white"} />
+      ) : (
+        <MoonIcon fillColor={"#424286"} />
+      )}
+    </button>
   );
 }

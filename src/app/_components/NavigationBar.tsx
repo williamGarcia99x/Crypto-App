@@ -10,6 +10,7 @@ import LogoIcon from "../_icons/LogoIcon";
 import MagnifyingGlassIcon from "../_icons/MagnifyingGlassIcon";
 import ThreeStackFineIcon from "../_icons/ThreeStarFineIcon";
 import ThemeSwitch from "./ThemeSwitch";
+import SearchBar from "./SearchBar";
 const inter = Inter({ subsets: ["latin"] });
 
 function NavigationBar() {
@@ -31,14 +32,14 @@ function NavigationBar() {
         <div className="flex items-center gap-2 text-2xl">
           <LogoIcon />
           <p
-            className={`${inter.className} hidden text-xl font-extrabold text-light-highlight-bar md:block`}
+            className={`${inter.className} hidden text-xl font-extrabold text-light-highlight-bar dark:text-white md:block`}
           >
             CoinFolio
           </p>
         </div>
 
         {/* Navigation links for wider screens */}
-        <nav className="hidden gap-6 min-[935px]:flex">
+        <nav className="md-plus:flex hidden gap-6">
           <Link href="/" className="flex gap-1">
             <HomeWithDoorIcon fillColor="#353570" />
             <p className="text-dark-highlight-bar">Home</p>
@@ -56,29 +57,14 @@ function NavigationBar() {
             !isWideEnough && isSearchActive && "w-full",
           )}
         >
-          <fieldset
-            className={twMerge(
-              "bg-light-50 flex h-10 rounded-lg min-[640px]:w-72",
-              isSearchActive && "w-full",
-            )}
-          >
-            {/* Search toggle button */}
-            <button
-              className="flex w-10 items-center justify-center"
-              onClick={toggleSearch}
-            >
-              <MagnifyingGlassIcon fillColor="#353570" className="" />
-            </button>
-
-            {/* Input field displayed based on screen size or active search */}
-            <input
-              type="text"
-              className="hidden h-full w-full bg-transparent outline-none min-[640px]:block"
-              placeholder="Search"
-            />
-          </fieldset>
-
+          <SearchBar
+            isSearchActive={false}
+            toggleSearch={() => null}
+            isWideEnough={false}
+            isSkeleton
+          />
           {/* Currency and theme switch (hidden in search mode on smaller screens) */}
+
           <div className="p-2">USD</div>
           <ThemeSwitch />
         </div>
@@ -90,7 +76,7 @@ function NavigationBar() {
     <header className="dark: mx-auto mb-4 flex h-20 w-full max-w-[1500px] items-center justify-between bg-white px-4 dark:dark:bg-dark-300">
       {/* Logo and app name */}
       {(isWideEnough || (!isWideEnough && !isSearchActive)) && (
-        <div className="flex items-center gap-2">
+        <div className="flex h-6 items-center gap-2">
           <LogoIcon />
           <p
             className={`${inter.className} hidden text-xl font-extrabold text-light-highlight-bar dark:text-white md:block`}
@@ -101,7 +87,7 @@ function NavigationBar() {
       )}
 
       {/* Navigation links for wider screens */}
-      <nav className="hidden gap-6 min-[935px]:flex">
+      <nav className="md-plus:flex hidden gap-6">
         <Link href="/" className="flex gap-1">
           <HomeWithDoorIcon fillColor="#353570" />
           <p className="text-dark-highlight-bar">Home</p>
@@ -116,30 +102,11 @@ function NavigationBar() {
       <div
         className={twMerge("flex", !isWideEnough && isSearchActive && "w-full")}
       >
-        <fieldset
-          className={twMerge(
-            "bg-light-50 flex h-10 rounded-lg min-[640px]:w-72",
-            isSearchActive && "w-full",
-          )}
-        >
-          {/* Search toggle button */}
-          <button
-            className="flex w-10 items-center justify-center"
-            onClick={toggleSearch}
-          >
-            <MagnifyingGlassIcon fillColor="#353570" className="" />
-          </button>
-
-          {/* Input field displayed based on screen size or active search */}
-          {(isWideEnough || isSearchActive) && (
-            <input
-              type="text"
-              className="h-full w-full bg-transparent outline-none"
-              placeholder="Search"
-            />
-          )}
-        </fieldset>
-
+        <SearchBar
+          isSearchActive={isSearchActive}
+          toggleSearch={toggleSearch}
+          isWideEnough={isWideEnough}
+        />
         {/* Currency and theme switch (hidden in search mode on smaller screens) */}
         {(isWideEnough || (!isWideEnough && !isSearchActive)) && (
           <>
