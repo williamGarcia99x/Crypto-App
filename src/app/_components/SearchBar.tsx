@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import MagnifyingGlassIcon from "../_icons/MagnifyingGlassIcon";
+import XMarkIcon from "../_icons/XMarkIcon";
 
 type searchBarProps = {
   isSearchActive: boolean;
@@ -16,6 +18,15 @@ function SearchBar({
   isWideEnough,
   isSkeleton = false,
 }: searchBarProps) {
+  //The MG icon is only reactive (performs actions in response to user interactions) when the viewport is not wide enough (< 640px). Otherwise, it simply serves as a visual icon.
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleMagnifyingGlassClick = () => {
+    if (!isWideEnough && inputRef.current) {
+      toggleSearch();
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div className="relative w-full">
       <fieldset
@@ -25,26 +36,25 @@ function SearchBar({
         )}
       >
         {/* Search toggle button */}
-        <button onClick={toggleSearch}>
+        <button
+          onClick={handleMagnifyingGlassClick}
+          className={isWideEnough || isSearchActive ? "cursor-default" : ""}
+        >
           <MagnifyingGlassIcon fillColor="#353570" className="" />
         </button>
 
         {/* Input field displayed based on screen size or active search. This is just the skeleton */}
-        {isSkeleton && (
-          <input
-            type="text"
-            className="hidden h-full w-full bg-transparent outline-none min-[640px]:block"
-            placeholder="Search..."
-          />
-        )}
 
-        {!isSkeleton && (isWideEnough || isSearchActive) && (
-          <input
-            type="text"
-            className="bg-transparent outline-none" //
-            placeholder="Search..."
-          />
-        )}
+        <input
+          type="text"
+          className={twMerge(
+            "w-0",
+            (isWideEnough || isSearchActive) &&
+              "w-auto bg-transparent outline-none",
+          )} //
+          placeholder="Search..."
+          ref={inputRef}
+        />
       </fieldset>
       <ul className="absolute z-50 w-full rounded-b-lg bg-light-50">
         <li className="w-min translate-x-10">Bitcoin</li>

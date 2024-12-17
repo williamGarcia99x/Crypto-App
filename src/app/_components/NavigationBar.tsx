@@ -14,6 +14,35 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
+function HomePortfolioLinks() {
+  const pathname = usePathname();
+  const { theme } = useTheme();
+
+  const isLinkActive = (href: string) => href === pathname;
+  return (
+    <nav className="hidden gap-6 md-plus:flex">
+      <Link href="/" className="flex gap-1">
+        <HomeWithDoorIcon
+          fillColor={theme === "light" ? "#353570" : "white"}
+          className={isLinkActive("/") ? "opacity-100" : "opacity-50"}
+        />
+        <p className={isLinkActive("/") ? "opacity-100" : "opacity-50"}>Home</p>
+      </Link>
+      <Link href="/portfolio" className="flex gap-1">
+        <ThreeStackFineIcon
+          fillColor={theme === "light" ? "#353570" : "white"}
+          className={` ${isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}`}
+        />
+        <p
+          className={isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}
+        >
+          Portfolio
+        </p>
+      </Link>
+    </nav>
+  );
+}
+
 export default function NavigationBar() {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -21,7 +50,7 @@ export default function NavigationBar() {
 
   // Toggles the search input visibility
 
-  const toggleSearch = () => setIsSearchActive((prevState) => !prevState);
+  const toggleSearch = () => setIsSearchActive(true);
 
   useEffect(function () {
     setIsMounted(true);
@@ -89,7 +118,7 @@ export default function NavigationBar() {
           isWideEnough={isWideEnough}
         />
         {/* Currency and theme switch (hidden in search mode on smaller screens) */}
-        {(isWideEnough || (!isWideEnough && !isSearchActive)) && (
+        {(isWideEnough || !isSearchActive) && (
           <>
             <div className="p-2">USD</div>
             <ThemeSwitch />
@@ -97,34 +126,5 @@ export default function NavigationBar() {
         )}
       </div>
     </header>
-  );
-}
-
-function HomePortfolioLinks() {
-  const pathname = usePathname();
-  const { theme } = useTheme();
-
-  const isLinkActive = (href: string) => href === pathname;
-  return (
-    <nav className="hidden gap-6 md-plus:flex">
-      <Link href="/" className="flex gap-1">
-        <HomeWithDoorIcon
-          fillColor={theme === "light" ? "#353570" : "white"}
-          className={isLinkActive("/") ? "opacity-100" : "opacity-50"}
-        />
-        <p className={isLinkActive("/") ? "opacity-100" : "opacity-50"}>Home</p>
-      </Link>
-      <Link href="/portfolio" className="flex gap-1">
-        <ThreeStackFineIcon
-          fillColor={theme === "light" ? "#353570" : "white"}
-          className={` ${isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}`}
-        />
-        <p
-          className={isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}
-        >
-          Portfolio
-        </p>
-      </Link>
-    </nav>
   );
 }
