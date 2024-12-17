@@ -147,7 +147,6 @@ body {
     scroll-behavior: smooth;
   }
 }
-
 @layer components {
   /* global.css or your main stylesheet */
   .custom-scrollbar::-webkit-scrollbar {

@@ -31,7 +31,7 @@ const config: Config = {
           "volume-chart": "#D878FA99",
         },
         light: {
-          "50": "#CCCCFA66",
+          "50": "#ebebfe",
           "100": "#6161D6",
           "highlight-bar": "#353570",
         },

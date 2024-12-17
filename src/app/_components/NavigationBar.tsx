@@ -7,18 +7,20 @@ import { twMerge } from "tailwind-merge";
 import { useMediaQuery } from "../_hooks/useMediaQuery";
 import HomeWithDoorIcon from "../_icons/HomeWithDoorIcon";
 import LogoIcon from "../_icons/LogoIcon";
-import MagnifyingGlassIcon from "../_icons/MagnifyingGlassIcon";
 import ThreeStackFineIcon from "../_icons/ThreeStarFineIcon";
 import ThemeSwitch from "./ThemeSwitch";
 import SearchBar from "./SearchBar";
+import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
-function NavigationBar() {
+export default function NavigationBar() {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isWideEnough = useMediaQuery("(min-width: 640px)");
 
   // Toggles the search input visibility
+
   const toggleSearch = () => setIsSearchActive((prevState) => !prevState);
 
   useEffect(function () {
@@ -37,18 +39,6 @@ function NavigationBar() {
             CoinFolio
           </p>
         </div>
-
-        {/* Navigation links for wider screens */}
-        <nav className="md-plus:flex hidden gap-6">
-          <Link href="/" className="flex gap-1">
-            <HomeWithDoorIcon fillColor="#353570" />
-            <p className="text-dark-highlight-bar">Home</p>
-          </Link>
-          <Link href="/portfolio" className="flex gap-1">
-            <ThreeStackFineIcon fillColor="#353570" />
-            <p>Portfolio</p>
-          </Link>
-        </nav>
 
         {/* Search input and controls */}
         <div
@@ -87,16 +77,7 @@ function NavigationBar() {
       )}
 
       {/* Navigation links for wider screens */}
-      <nav className="md-plus:flex hidden gap-6">
-        <Link href="/" className="flex gap-1">
-          <HomeWithDoorIcon fillColor="#353570" />
-          <p className="text-dark-highlight-bar">Home</p>
-        </Link>
-        <Link href="/portfolio" className="flex gap-1">
-          <ThreeStackFineIcon fillColor="#353570" />
-          <p>Portfolio</p>
-        </Link>
-      </nav>
+      <HomePortfolioLinks />
 
       {/* Search input and controls */}
       <div
@@ -119,4 +100,31 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+function HomePortfolioLinks() {
+  const pathname = usePathname();
+  const { theme } = useTheme();
+
+  const isLinkActive = (href: string) => href === pathname;
+  return (
+    <nav className="hidden gap-6 md-plus:flex">
+      <Link href="/" className="flex gap-1">
+        <HomeWithDoorIcon
+          fillColor={theme === "light" ? "#353570" : "white"}
+          className={isLinkActive("/") ? "opacity-100" : "opacity-50"}
+        />
+        <p className={isLinkActive("/") ? "opacity-100" : "opacity-50"}>Home</p>
+      </Link>
+      <Link href="/portfolio" className="flex gap-1">
+        <ThreeStackFineIcon
+          fillColor={theme === "light" ? "#353570" : "white"}
+          className={` ${isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}`}
+        />
+        <p
+          className={isLinkActive("/portfolio") ? "opacity-100" : "opacity-50"}
+        >
+          Portfolio
+        </p>
+      </Link>
+    </nav>
+  );
+}

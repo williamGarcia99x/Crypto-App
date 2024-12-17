@@ -1,4 +1,10 @@
-function ThreeStackFineIcon({ fillColor }: { fillColor: string }) {
+function ThreeStackFineIcon({
+  fillColor,
+  className,
+}: {
+  fillColor: string;
+  className: string;
+}) {
   return (
     <svg
       width="18"
@@ -6,6 +12,7 @@ function ThreeStackFineIcon({ fillColor }: { fillColor: string }) {
       viewBox="0 0 21 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M19.5 11L10.5 17L1.5 11M19.5 15L10.5 21L1.5 15M19.5 7L10.5 13L1.5 7L10.5 1L19.5 7Z"
