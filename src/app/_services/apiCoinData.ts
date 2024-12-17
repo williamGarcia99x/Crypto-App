@@ -2,12 +2,9 @@ const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 
 export async function getCoinHistoricalChartData(
-
   coinId: string,
   currency: string,
-  days: string
-
-
+  days: string,
 ): Promise<{
   prices: number[][];
   marketCaps: number[][];
@@ -42,5 +39,74 @@ export async function getCoinHistoricalChartData(
     // eslint-disable-next-line no-console
     console.error("Error in getCoinHistoricalChartData. ", error);
     throw error; // Re-throw the error so it can be handled by the calling function
+  }
+}
+
+/**
+ *
+ * @param currency
+ * @param sortOrder
+ * @param currentPage
+ * @returns list of coin data that is displayed by the CoinsTable component
+ */
+export async function getCoins(
+  currency: string,
+  sortOrder: string,
+  currentPage: number,
+) {
+  try {
+    // Make the fetch request
+    const res = await fetch(`
+        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&${apiKey}`);
+    //
+    // Check if the response is not OK (i.e., status code not in the range 200-299)
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(`Error fetching data: ${res.status} ${error}`);
+    }
+
+    // Parse the response as JSON
+    const data = await res.json();
+
+    // Return the structured data
+    return data;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in getCoins", error);
+    throw error; // Re-throw the error so it can be handled by the calling function
+  }
+}
+
+/**
+ *
+ * @returns Market summary data that is displayed in the hightlight bar
+ */
+export async function getMarketSummary() {
+  try {
+    const res = await fetch(`${baseUrl}/global`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(
+        `Error fetching market summary data: ${res.status} ${error}`,
+      );
+    }
+
+    const data = await res.json();
+
+    return data.data;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in getMarketSummary", error);
+    throw error; // Re-throw the error so it can be handled by the calling function}
   }
 }
