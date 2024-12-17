@@ -2,8 +2,12 @@ const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
 
 export async function getCoinHistoricalChartData(
-  coinId,
-  currency
+
+  coinId: string,
+  currency: string,
+  days: string
+
+
 ): Promise<{
   prices: number[][];
   marketCaps: number[][];
@@ -12,7 +16,7 @@ export async function getCoinHistoricalChartData(
   try {
     // Make the fetch request
     const res = await fetch(`
-        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=1&${apiKey}`);
+        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&${apiKey}`);
 
     // Check if the response is not OK (i.e., status code not in the range 200-299)
     if (!res.ok) {
