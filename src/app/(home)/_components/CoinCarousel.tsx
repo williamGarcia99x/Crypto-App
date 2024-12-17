@@ -49,8 +49,8 @@ function CoinCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="md-plus:inline-flex hidden bg-cryptoblue-250" />
-        <CarouselNext className="md-plus:inline-flex hidden bg-cryptoblue-250" />
+        <CarouselPrevious className="hidden bg-cryptoblue-250 md-plus:inline-flex" />
+        <CarouselNext className="hidden bg-cryptoblue-250 md-plus:inline-flex" />
       </Carousel>
     </div>
   );
