@@ -1,5 +1,13 @@
-const apiKey = `x_cg_demo_api_key=${process.env.NEXT_PUBLIC_CG_API_KEY}`;
+import { CoinDescriptionShort } from "@/lib/types";
+
 const baseUrl = process.env.NEXT_PUBLIC_CG_BASE_URL;
+const defaultOptions = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    "x-cg-demo-api-key": process.env.NEXT_PUBLIC_CG_API_KEY as string,
+  },
+};
 
 export async function getCoinHistoricalChartData(
   coinId: string,
@@ -12,8 +20,11 @@ export async function getCoinHistoricalChartData(
 }> {
   try {
     // Make the fetch request
-    const res = await fetch(`
-        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&${apiKey}`);
+    const res = await fetch(
+      `
+        ${baseUrl}/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}`,
+      defaultOptions,
+    );
 
     // Check if the response is not OK (i.e., status code not in the range 200-299)
     if (!res.ok) {
@@ -56,8 +67,11 @@ export async function getCoins(
 ) {
   try {
     // Make the fetch request
-    const res = await fetch(`
-        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&${apiKey}`);
+    const res = await fetch(
+      `
+        ${baseUrl}/coins/markets?vs_currency=${currency}&order=${sortOrder}&per_page=20&page=${currentPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`,
+      defaultOptions,
+    );
     //
     // Check if the response is not OK (i.e., status code not in the range 200-299)
     if (!res.ok) {
@@ -85,12 +99,7 @@ export async function getCoins(
  */
 export async function getMarketSummary() {
   try {
-    const res = await fetch(`${baseUrl}/global`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    });
+    const res = await fetch(`${baseUrl}/global`, defaultOptions);
 
     if (!res.ok) {
       //get the error message
@@ -107,6 +116,36 @@ export async function getMarketSummary() {
     // Handle errors (e.g., network issues, API errors)
     // eslint-disable-next-line no-console
     console.error("Error in getMarketSummary", error);
+    throw error; // Re-throw the error so it can be handled by the calling function}
+  }
+}
+
+/**
+ *
+ * @param query
+ * @returns
+ */
+export async function searchCoins(
+  query: string,
+): Promise<Array<Omit<CoinDescriptionShort, "image">>> {
+  try {
+    const res = await fetch(`${baseUrl}/search?query=${query}`, defaultOptions);
+
+    if (!res.ok) {
+      //get the error message
+      const { error } = await res.json();
+      throw new Error(
+        `Error performing search by query: ${res.status} ${error}`,
+      );
+    }
+
+    const data = await res.json();
+
+    return data.coins;
+  } catch (error) {
+    // Handle errors (e.g., network issues, API errors)
+    // eslint-disable-next-line no-console
+    console.error("Error in searchCoins", error);
     throw error; // Re-throw the error so it can be handled by the calling function}
   }
 }

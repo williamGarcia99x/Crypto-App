@@ -50,7 +50,8 @@ export default function NavigationBar() {
 
   // Toggles the search input visibility
 
-  const toggleSearch = () => setIsSearchActive(true);
+  const activateSearch = () => setIsSearchActive(true);
+  const deactivateSearch = () => setIsSearchActive(false);
 
   useEffect(function () {
     setIsMounted(true);
@@ -78,9 +79,9 @@ export default function NavigationBar() {
         >
           <SearchBar
             isSearchActive={false}
-            toggleSearch={() => null}
+            activateSearch={() => null}
             isWideEnough={false}
-            isSkeleton
+            deactivateSearch={() => null}
           />
           {/* Currency and theme switch (hidden in search mode on smaller screens) */}
 
@@ -114,8 +115,9 @@ export default function NavigationBar() {
       >
         <SearchBar
           isSearchActive={isSearchActive}
-          toggleSearch={toggleSearch}
+          activateSearch={activateSearch}
           isWideEnough={isWideEnough}
+          deactivateSearch={deactivateSearch}
         />
         {/* Currency and theme switch (hidden in search mode on smaller screens) */}
         {(isWideEnough || !isSearchActive) && (
